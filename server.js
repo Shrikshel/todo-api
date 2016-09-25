@@ -1,21 +1,14 @@
 const express = require('express');
 var app = express();
 var PORT = process.env.PORT || 3000;
+var todos = [];
+var todoID = 1;
+const bodyParser = require('body-parser');
 
-var todos = [{
-  id:1,
-  description: "Go to Bed",
-  completed: false
-},{
-  id:2,
-  description:"Eat something heavy!",
-  completed:false
-},{
-  id:3,
-  description:"Complete Angular JS!",
-  completed:true
-}];
+//Body Parser
+app.use(bodyParser.json());
 
+//Default Page
 app.get('/', function (req,res) {
   res.send('Yuppie! You are live on - TODO');
 });
@@ -42,7 +35,16 @@ app.get('/todos/:id',function (req,res) {
   }
 });
 
+//POST /todos
+app.post('/todos', function(req,res){
+  var body = req.body;
+  body.id = todoID;
+  todos.push(body);
+  todoID++;
 
+});
+
+//Server Config
 app.listen(PORT, function () {
   console.log('Running on PORT: ' + PORT);
 });
