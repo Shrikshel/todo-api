@@ -51,6 +51,19 @@ app.post('/todos', function(req,res){
   res.send(body);
 });
 
+//DELETE /todos/:?
+app.delete('/todos/:id', function(req,res){
+  var todoId = parseInt(req.params.id,10);
+  var matchedTodo = _.findWhere(todos, {id: todoId});
+
+  if(!matchedTodo){
+    return res.status(404).send();
+  }else{
+    todos = _.without(todos, matchedTodo);
+    res.json(matchedTodo);
+  }
+});
+
 //Server Config
 app.listen(PORT, function () {
   console.log('Running on PORT: ' + PORT);
