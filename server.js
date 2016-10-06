@@ -119,6 +119,20 @@ app.delete('/todos/:id', function(req,res){
   });
 });
 
+//===================User Management======================
+app.post('/users',function(req,res){
+  var user = _.pick(req.body, 'email','password');
+
+  db.user.create(user).then(function(user){
+    if(user){
+      res.json(user);
+    }
+  }, function(e){
+    res.status(400).json(e);
+  });
+});
+
+
 db.sequelize.sync().then(function(){
   //Server Config
   app.listen(PORT, function () {
