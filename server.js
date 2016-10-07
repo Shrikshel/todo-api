@@ -125,7 +125,7 @@ app.post('/users',function(req,res){
 
   db.user.create(user).then(function(user){
     if(user){
-      res.json(user);
+      res.json(user.toPublicJSON());
     }
   }, function(e){
     res.status(400).json(e);
